@@ -279,7 +279,6 @@ function parseBlockquote(element: marked.Tokens.Blockquote): KnownBlock[] {
     .flatMap(p =>
       parseParagraph(p).map(block => {
         if (isSectionBlock(block) && block.text?.text) {
-          // Prepend '> ' to each line of the blockquote text
           block.text.text = block.text.text
             .split('\n')
             .map(line => '> ' + line)
