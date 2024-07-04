@@ -220,6 +220,20 @@ function parseTable(element: marked.Tokens.Table): SectionBlock {
   return section(`\`\`\`\n${parsedRows.join('\n')}\n\`\`\``);
 }
 
+// function parseBlockquote(element: marked.Tokens.Blockquote): KnownBlock[] {
+//   return element.tokens
+//     .filter(
+//       (child): child is marked.Tokens.Paragraph => child.type === 'paragraph'
+//     )
+//     .flatMap(p =>
+//       parseParagraph(p).map(block => {
+//         if (isSectionBlock(block) && block.text?.text?.includes('\n'))
+//           block.text.text = '> ' + block.text.text.replace(/\n/g, '\n> ');
+//         return block;
+//       })
+//     );
+// }
+
 function parseBlockquote(element: marked.Tokens.Blockquote): KnownBlock[] {
   return element.tokens
     .filter(
@@ -227,8 +241,13 @@ function parseBlockquote(element: marked.Tokens.Blockquote): KnownBlock[] {
     )
     .flatMap(p =>
       parseParagraph(p).map(block => {
-        if (isSectionBlock(block) && block.text?.text?.includes('\n'))
-          block.text.text = '> ' + block.text.text.replace(/\n/g, '\n> ');
+        if (isSectionBlock(block) && block.text?.text) {
+          // Prepend '> ' to each line of the blockquote text
+          block.text.text = block.text.text
+            .split('\n')
+            .map(line => '> ' + line)
+            .join('\n');
+        }
         return block;
       })
     );
