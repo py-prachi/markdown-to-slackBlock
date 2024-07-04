@@ -48,45 +48,9 @@ function isSectionBlock(block: KnownBlock): block is SectionBlock {
   return block.type === 'section';
 }
 
-// function parseMrkdwn(
-//   element: Exclude<PhrasingToken, marked.Tokens.Image>
-// ): string {
-//   switch (element.type) {
-//     case 'link': {
-//       return `<${element.href}|${element.tokens
-//         .flatMap(child => parseMrkdwn(child as typeof element))
-//         .join('')}> `;
-//     }
-
-//     case 'em': {
-//       return `_${element.tokens
-//         .flatMap(child => parseMrkdwn(child as typeof element))
-//         .join('')}_`;
-//     }
-
-//     case 'codespan':
-//       return `\`${element.text}\``;
-
-//     case 'strong': {
-//       return `*${element.tokens
-//         .flatMap(child => parseMrkdwn(child as typeof element))
-//         .join('')}*`;
-//     }
-
-//     case 'text':
-//       return element.text;
-
-//     case 'del': {
-//       return `~${element.tokens
-//         .flatMap(child => parseMrkdwn(child as typeof element))
-//         .join('')}~`;
-//     }
-
-//     default:
-//       return '';
-//   }
-// }
-function parseMrkdwn(element: Exclude<PhrasingToken, marked.Tokens.Image>): string {
+function parseMrkdwn(
+  element: Exclude<PhrasingToken, marked.Tokens.Image>
+): string {
   switch (element.type) {
     case 'link': {
       return `<${element.href}|${element.tokens
